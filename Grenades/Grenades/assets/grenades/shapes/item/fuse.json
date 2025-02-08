@@ -1,0 +1,29 @@
+{
+	"editor": {
+		"allAngles": false,
+		"entityTextureMode": false
+	},
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textureSizes": {
+	},
+	"textures": {
+		"rope": "game:item/resource/rope"
+	},
+	"elements": [
+		{
+			"name": "fuse",
+			"from": [ 7.0, 0.0, 4.0 ],
+			"to": [ 9.0, 2.0, 12.0 ],
+			"rotationOrigin": [ 8.0, 0.0, 8.0 ],
+			"rotationY": -22.5,
+			"faces": {
+				"north": { "texture": "#rope", "uv": [ 0.0, 0.0, 1.0, 1.0 ], "autoUv": false },
+				"east": { "texture": "#rope", "uv": [ 0.0, 0.0, 4.0, 1.0 ], "autoUv": false },
+				"south": { "texture": "#rope", "uv": [ 0.0, 0.0, 1.0, 1.0 ], "autoUv": false },
+				"west": { "texture": "#rope", "uv": [ 0.0, 0.0, 4.0, 1.0 ], "autoUv": false },
+				"up": { "texture": "#rope", "uv": [ 0.0, 0.0, 1.0, 4.0 ], "autoUv": false },
+				"down": { "texture": "#rope", "uv": [ 0.0, 0.0, 1.0, 4.0 ], "autoUv": false }
+			}
+		}
+	]}

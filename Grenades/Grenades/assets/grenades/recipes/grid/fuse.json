@@ -1,0 +1,11 @@
+{
+    ingredientPattern: "TG,P_,",
+    ingredients: {
+        "T": { type: "item", code: "game:flaxtwine", quantity: 4 },
+        "G": { type: "item", code: "game:*", allowedVariants: ["resin", "fat"] },
+        "P": { type: "item", code: "game:blastingpowder" }
+    },
+    width: 2,
+	height: 2,
+	output: { type: "item", code: "fuse", quantity: 16 }
+}

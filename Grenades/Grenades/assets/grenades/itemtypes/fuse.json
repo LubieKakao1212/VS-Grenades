@@ -1,0 +1,26 @@
+{
+    code: "fuse",
+	creativeinventory: { "general": ["*"], "construction": ["*"] },
+    shape: { base: "item/fuse" },
+    "guiTransform": {
+		translation: { x: 0, y: 0, z: 0 },
+		rotation: { x: 0, y: 0, z: 0 },
+		origin: { x: 0, y: 0, z: 0 },
+		scale: 2.25
+	},
+	"fpHandTransform": {
+		rotation: { x: 0, y: 0, z: 0 },
+		scale: 1.2
+	},
+	tpHandTransform: {
+		translation: { x: 0, y: 0, z: 0 },
+		rotation: { x: 0, y: 0, z: 0 },
+		origin: { x: 0, y: 0, z: 0 },
+    },
+    groundTransform: {
+		translation: { x: 0, y: 0, z: 0 },
+		rotation: { x: 0, y: 0, z: 0 },
+		origin: { x: 0, y: 0, z: 0 },
+		scale: 4
+	}
+}

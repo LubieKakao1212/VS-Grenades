@@ -1,5 +1,5 @@
 {
-    code: "glass-grenade",
+    code: "grenade",
 	class: "grenades.ThrownExplosive",
 	variantgroups: [
 		// { 
