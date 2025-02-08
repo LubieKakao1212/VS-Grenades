@@ -1,0 +1,62 @@
+{
+	code: "glass-grenade",
+	class: "grenades.ExplosiveProjectile",
+	// variantgroups: [
+	// 	{ code: "casing", states: ["plain", "quartz", "green", "blue", "violet", "red", "yellow", "brown", "vintage", "smoky", "pink" ] },
+	// ],
+	variantgroups: [
+		{
+			code: "glass",
+			states: ["metal", "plain", "quartz", "green", "blue", "violet", "red", "yellow", "brown", "vintage", "smoky", "pink" ]
+		},
+		{
+			code: "metal",
+			states: ["glass", "copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "meteoriciron", "steel", "electrum" ]
+		}
+	],
+	skipVariants: [
+    	"*-metal-glass"
+	],
+	allowedVariants: [
+		"*-metal-*",
+		"*-glass",
+	],
+	attributes: {
+		isProjectile: true
+	},
+	hitboxSize: { x: 0.125, y: 0.125 },
+	client: {
+		size: 0.75,
+		renderer: "Shape",
+		shape: { base: "item/glass-grenade" },
+		textures: {
+			casing: {
+				baseByType: {
+					"*-metal-*": "game:block/metal/ingot/{metal}",
+					"*-glass": "game:block/glass/{glass}",
+				}
+			},
+		},
+		behaviors: [
+			{ code: "passivephysics",
+				groundDragFactor: 1,
+				airDragFactor: 0.25,
+				gravityFactor: 0.75
+			}, 
+			{ code: "interpolateposition" }
+		],
+	},
+	server: {
+		behaviors: [
+			{ 
+				code: "passivephysics",
+				groundDragFactor: 1,
+				airDragFactor: 0.25,
+				gravityFactor: 0.75
+			}, 
+			{ code: "despawn", minSeconds: 600 }
+		],
+	},
+	sounds: {
+	}
+}

@@ -1,0 +1,63 @@
+{
+    code: "glass-grenade",
+	class: "grenades.ThrownExplosive",
+	variantgroups: [
+		// { 
+		// 	code: "casing", states: [
+		// 		"g-plain", "g-quartz", "g-green", "g-blue", "g-violet", "g-red", "g-yellow", "g-brown", "g-vintage", "g-smoky", "g-pink",
+		// 		"m-copper", "m-tinbronze", "m-bismuthbronze", "m-blackbronze", "m-gold", "m-silver", "m-iron", "m-meteoriciron", "m-steel", "m-electrum" ] 
+		// },
+		{
+			code: "glass",
+			states: ["metal", "plain", "quartz", "green", "blue", "violet", "red", "yellow", "brown", "vintage", "smoky", "pink" ]
+		},
+		{
+			code: "metal",
+			states: ["glass", "copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "meteoriciron", "steel", "electrum" ]
+		}
+	],
+	skipVariants: [
+    	"*-metal-glass"
+	],
+	allowedVariants: [
+		"*-metal-*",
+		"*-glass",
+	],
+	creativeinventory: { "general": ["*"], "construction": ["*"] },
+    attributes: {
+        projectile: "grenades:glass-grenade-{glass}-{metal}",
+        fuse: 2,
+        aoeRadius: 7,
+        blastRadius: 0
+    },
+    shape: { base: "item/glass-grenade" },
+	textures: {
+		casing: {
+			baseByType: {
+				"*-metal-*": "game:block/metal/ingot/{metal}",
+				"*-glass": "game:block/glass/{glass}",
+			}
+		},
+	},
+    "guiTransform": {
+		translation: { x: 1, y: 0, z: 0 },
+		rotation: { x: -26, y: -22, z: -23 },
+		origin: { x: 0.5, y: 0.27, z: 0.5 },
+		scale: 2.25
+	},
+	"fpHandTransform": {
+		rotation: { x: -19, y: -45, z: 0 },
+		scale: 1.2
+	},
+	tpHandTransform: {
+		translation: { x: -1.1, y: -0.5, z: -1 },
+		rotation: { x: 0, y: -2, z: -69 },
+		origin: { x: 0.5, y: 0.25, z: 0.5 },
+    },
+	groundTransform: {
+		translation: { x: 0, y: 0, z: 0 },
+		rotation: { x: 0, y: 0, z: 0 },
+		origin: { x: 0.5, y: -0, z: 0.5 },
+		scale: 4
+	},
+}
