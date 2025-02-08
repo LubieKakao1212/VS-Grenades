@@ -1,0 +1,13 @@
+{
+    "type": "code",
+    "modid": "grenades",
+    "name": "Grenades",
+    "authors": [
+        "LubieKakao1212"
+    ],
+    "description": "To be added",
+    "version": "0.0.0",
+    "dependencies": {
+        "game": ""
+    }
+}

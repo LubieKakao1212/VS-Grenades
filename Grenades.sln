@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CakeBuild", "Grenades\CakeBuild\CakeBuild.csproj", "{C8864A54-D3AC-4BE7-AAFD-C0B46AD3CF2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grenades", "Grenades\Grenades\Grenades.csproj", "{64280EB1-1630-49EF-8D3D-95CD304CE635}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C8864A54-D3AC-4BE7-AAFD-C0B46AD3CF2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8864A54-D3AC-4BE7-AAFD-C0B46AD3CF2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8864A54-D3AC-4BE7-AAFD-C0B46AD3CF2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8864A54-D3AC-4BE7-AAFD-C0B46AD3CF2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64280EB1-1630-49EF-8D3D-95CD304CE635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64280EB1-1630-49EF-8D3D-95CD304CE635}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64280EB1-1630-49EF-8D3D-95CD304CE635}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64280EB1-1630-49EF-8D3D-95CD304CE635}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
