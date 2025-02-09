@@ -1,3 +1,5 @@
+using System;
+using Grenades.Util;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Server;
@@ -9,6 +11,7 @@ public class EntityExplosiveProjectile : EntityProjectile {
     
     protected double damageRadius;
     protected double blastRadius;
+    protected double peakDamage = 10;
     
     protected double fuse;
 
@@ -39,7 +42,6 @@ public class EntityExplosiveProjectile : EntityProjectile {
         }
     }
     
-    
     public override void OnGameTick(float dt) {
         base.OnGameTick(dt);
         if (World.Side == EnumAppSide.Server) {
@@ -52,7 +54,10 @@ public class EntityExplosiveProjectile : EntityProjectile {
     public override void Die(EnumDespawnReason reason = EnumDespawnReason.Death, DamageSource damageSourceForDeath = null) {
         base.Die(reason, damageSourceForDeath);
         if (World.Side == EnumAppSide.Server) {
-            ((IServerWorldAccessor) World).CreateExplosion(ServerPos.XYZ.AsBlockPos, EnumBlastType.EntityBlast, blastRadius, damageRadius);
+            //((IServerWorldAccessor) World).CreateExplosion(ServerPos.XYZ.AsBlockPos, EnumBlastType.EntityBlast, blastRadius, damageRadius);
+            var pos = ServerPos.XYZ;
+            World.DoExplosionDamage(pos, (float)peakDamage, 4, (float)damageRadius, FiredBy);
+            World.DoExplosionEffects(pos, (float)peakDamage/2f);
         }
     }
 }
