@@ -4,7 +4,6 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"casing": "block/glass/plain",
 		"rope": "game:item/resource/rope",
 		"blastingpowder": "game:item/resource/crushed/blastingpowder"
 	},

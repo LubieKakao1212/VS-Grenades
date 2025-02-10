@@ -20,5 +20,5 @@
         ]
     ],
 	name: "GrenadeCasing",
-	output: { type: "item", code: "grenade-casing-{metal}" }
+	output: { type: "item", code: "grenade-casing-{metal}", quantity: 8 }
 }

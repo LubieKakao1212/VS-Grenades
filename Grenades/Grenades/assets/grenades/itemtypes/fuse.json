@@ -8,19 +8,26 @@
 		origin: { x: 0, y: 0, z: 0 },
 		scale: 2.25
 	},
+	maxStackSize: 64,
 	"fpHandTransform": {
 		rotation: { x: 0, y: 0, z: 0 },
 		scale: 1.2
 	},
-	tpHandTransform: {
-		translation: { x: 0, y: 0, z: 0 },
-		rotation: { x: 0, y: 0, z: 0 },
-		origin: { x: 0, y: 0, z: 0 },
-    },
+    tpHandTransform: {
+		translation: { x: 0, y: 0, z: 0.6 },
+		rotation: { x: -58, y: 0, z: 91 },
+		origin: { x: 0, y: 0, z: 0 }
+	},
     groundTransform: {
 		translation: { x: 0, y: 0, z: 0 },
 		rotation: { x: 0, y: 0, z: 0 },
 		origin: { x: 0, y: 0, z: 0 },
 		scale: 4
+	},
+	guiTransform: {
+		translation: { x: 0, y: 0, z: 0 },
+		rotation: { x: 47, y: 0, z: 0 },
+		origin: { x: 0.5, y: 0, z: 0.5 },
+		scale: 2.25
 	}
 }

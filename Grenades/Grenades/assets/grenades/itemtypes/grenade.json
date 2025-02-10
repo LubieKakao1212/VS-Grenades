@@ -2,11 +2,6 @@
     code: "grenade",
 	class: "grenades.ThrownExplosive",
 	variantgroups: [
-		// { 
-		// 	code: "casing", states: [
-		// 		"g-plain", "g-quartz", "g-green", "g-blue", "g-violet", "g-red", "g-yellow", "g-brown", "g-vintage", "g-smoky", "g-pink",
-		// 		"m-copper", "m-tinbronze", "m-bismuthbronze", "m-blackbronze", "m-gold", "m-silver", "m-iron", "m-meteoriciron", "m-steel", "m-electrum" ] 
-		// },
 		{
 			code: "glass",
 			states: ["metal", "plain", "quartz", "green", "blue", "violet", "red", "yellow", "brown", "vintage", "smoky", "pink" ]
@@ -24,11 +19,45 @@
 		"*-glass",
 	],
 	creativeinventory: { "general": ["*"], "construction": ["*"] },
-    attributes: {
+	attributes: {
         projectile: "grenades:glass-grenade-{glass}-{metal}",
         fuse: 2,
-        aoeRadius: 7,
-        blastRadius: 0
+        aoeRadiusByType: {
+			"*-glass": 6.5,
+			"*-copper": 5,
+			"*-*bronze": 5,
+			"*-iron": 5,
+			"*-meteoriciron": 5.5,
+			"*-steel": 5.5,
+
+			"*-gold": 6,
+			"*-silver": 6,
+			"*-electrum": 6
+		},
+		damageByType: {
+			"*-glass": 4.5,
+			"*-copper": 5.5,
+			"*-*bronze": 6.5,
+			"*-iron": 7.5,
+			"*-meteoriciron": 8.5,
+			"*-steel": 9.5,
+
+			"*-gold": 6,
+			"*-silver": 6,
+			"*-electrum": 6
+		},
+		damageTierByType : {
+			"*-glass": 2,
+			"*-copper": 1,
+			"*-*bronze": 2,
+			"*-iron": 3,
+			"*-meteoriciron": 3,
+			"*-steel": 4,
+
+			"*-gold": 2,
+			"*-silver": 2,
+			"*-electrum": 2
+		}
     },
     shape: { base: "item/glass-grenade" },
 	textures: {
@@ -39,25 +68,27 @@
 			}
 		},
 	},
-    "guiTransform": {
-		translation: { x: 1, y: 0, z: 0 },
-		rotation: { x: -26, y: -22, z: -23 },
+	maxStackSize: 16,
+    guiTransform: {
+		translation: { x: 2, y: 0, z: 0 },
+		rotation: { x: 142, y: -12, z: -13 },
 		origin: { x: 0.5, y: 0.27, z: 0.5 },
-		scale: 2.25
+		scale: 2.52
 	},
 	"fpHandTransform": {
 		rotation: { x: -19, y: -45, z: 0 },
 		scale: 1.2
 	},
 	tpHandTransform: {
-		translation: { x: -1.1, y: -0.5, z: -1 },
-		rotation: { x: 0, y: -2, z: -69 },
+		translation: { x: -1.1, y: -0.8, z: -1 },
+		rotation: { x: 0, y: 0, z: -89 },
 		origin: { x: 0.5, y: 0.25, z: 0.5 },
-    },
+		scale: 0.5
+	},
 	groundTransform: {
 		translation: { x: 0, y: 0, z: 0 },
 		rotation: { x: 0, y: 0, z: 0 },
 		origin: { x: 0.5, y: -0, z: 0.5 },
 		scale: 4
-	},
+	}
 }

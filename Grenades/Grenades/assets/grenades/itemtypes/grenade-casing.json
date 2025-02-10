@@ -8,25 +8,24 @@
 	textures: {
 		material: { base: "game:block/metal/ingot/{metal}" },
 	},
-    "guiTransform": {
-		translation: { x: 1, y: 0, z: 0 },
-		rotation: { x: -26, y: -22, z: -23 },
+	maxStackSize: 16,
+    guiTransform: {
+		translation: { x: 2, y: -3, z: 0 },
+		rotation: { x: 142, y: -12, z: -13 },
 		origin: { x: 0.5, y: 0.27, z: 0.5 },
-		scale: 2.25
+		scale: 2.5
 	},
 	"fpHandTransform": {
 		rotation: { x: -19, y: -45, z: 0 },
 		scale: 1.2
 	},
 	tpHandTransform: {
-		translation: { x: -1.1, y: -0.5, z: -1 },
-		rotation: { x: 0, y: -2, z: -69 },
+		translation: { x: -1.1, y: -0.8, z: -1 },
+		rotation: { x: 0, y: 0, z: -89 },
 		origin: { x: 0.5, y: 0.25, z: 0.5 },
-    },
-    groundTransform: {
-		translation: { x: 0, y: 0, z: 0 },
-		rotation: { x: 0, y: 0, z: 0 },
-		origin: { x: 0.5, y: -0, z: 0.5 },
-		scale: 4
+		scale: 0.5
 	},
+	groundTransform: {
+		scale: 4
+	}
 }

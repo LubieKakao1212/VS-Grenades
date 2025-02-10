@@ -1,7 +1,9 @@
 using System;
+using System.Text;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
@@ -17,8 +19,7 @@ public class ItemThrownExplosive : Item {
 
         handling = EnumHandHandling.Handled;
     }
-
-
+    
     public override bool OnHeldInteractStep(float secondsUsed, ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel) {
         if (byEntity.Attributes.GetInt("aimingCancel", 0) == 1)
             return false;
@@ -73,6 +74,24 @@ public class ItemThrownExplosive : Item {
         entity.World = byEntity.World;
         byEntity.World.SpawnEntity(entity);
         byEntity.StartAnimation("throw");
+    }
+    
+    public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo) {
+        base.GetHeldItemInfo(inSlot, dsc, world, withDebugInfo);
+
+        var stack = inSlot.Itemstack;
+
+        var collectibleAttributes = this.Attributes;
+        
+        var fuse = collectibleAttributes["fuse"].AsDouble(1);
+        var damageRadius = collectibleAttributes["aoeRadius"].AsDouble(1);
+        var peakDamage = collectibleAttributes["damage"].AsDouble(1);
+        var damageTier = collectibleAttributes["damageTier"].AsInt(1);
+
+        dsc.AppendLine(Lang.Get("grenades:desc-fuse", fuse));
+        dsc.AppendLine(Lang.Get("grenades:desc-radius", damageRadius));
+        dsc.AppendLine(Lang.Get("grenades:desc-damage", peakDamage));
+        dsc.AppendLine(Lang.Get("grenades:desc-damageTier", damageTier));
     }
 
     // public override bool RequiresTransitionableTicking(IWorldAccessor world, ItemStack itemstack) {

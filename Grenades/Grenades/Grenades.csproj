@@ -41,10 +41,19 @@
         <Content Include="modinfo.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+        <Content Remove="assets\itemtypes\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="assets\itemtypes\" />
+      <Compile Remove="assets\itemtypes\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="assets\itemtypes\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="assets\itemtypes\**" />
     </ItemGroup>
 
 </Project>

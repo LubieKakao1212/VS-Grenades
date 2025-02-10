@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
@@ -24,7 +25,8 @@ public static class ExplosionUtil {
         foreach (var entity in entities) {
             //TODO check distance
             var exposure = RaycastForExposure(world, pos, entity);
-            var damage = exposure * peakDamage;// * (radius - distance);TODO
+            var distance = (float)entity.CollisionBox.ShortestDistanceFrom(pos.SubCopy(entity.ServerPos.XYZ));
+            var damage = exposure * peakDamage * (radius - distance) / radius;
 
             if (damage >= 0.25) {
                 entity.ReceiveDamage(damageSource, damage);
@@ -32,30 +34,70 @@ public static class ExplosionUtil {
         }
     }
 
-    public static void DoExplosionEffects(this IWorldAccessor world, Vec3d pos, float power) {
-        SimpleParticleProperties explosionFireParticles = ExplosionParticles.ExplosionFireParticles;
+    public static void DoExplosionEffects(this IWorldAccessor world, Vec3d pos, float power, float radius) {
+        AdvancedParticleProperties explosionFireParticles = new AdvancedParticleProperties();// ExplosionParticles.ExplosionFireParticles.CloneParticles(world);
         
         float x = power / 3f;
-        explosionFireParticles.MinPos.Set((double) pos.X, (double) pos.Y, (double) pos.Z);
-        explosionFireParticles.MinQuantity = 100f * x;
-        explosionFireParticles.AddQuantity = (float) (int) (20.0 * Math.Pow(power, 0.75));
+        float r = radius / 3f;
+        float r2 = r * 100f;
+        
+        // explosionFireParticles.MinPos.Set(pos.X - r, pos.Y - r, pos.Z - r);
+        // explosionFireParticles.MinQuantity = 100f * r;
+        // explosionFireParticles.AddQuantity = (int) (20.0 * Math.Pow(power, 0.75));
+        // explosionFireParticles.AddPos.Set(r * 2f, r * 2f, r * 2f);
+        explosionFireParticles.HsvaColor = new NatFloat[]
+        {
+            NatFloat.createUniform(30f, 15f),
+            NatFloat.createUniform(byte.MaxValue, 50f),
+            NatFloat.createUniform(byte.MaxValue, 0f),
+            NatFloat.createUniform(200f, 30f)
+        };
+        explosionFireParticles.PosOffset = new NatFloat[]
+        {
+            NatFloat.createGauss(0.0f, r),
+            NatFloat.createGauss(0.0f, r),
+            NatFloat.createGauss(0.0f, r)
+        };
+        explosionFireParticles.LifeLength = NatFloat.createUniform(0.2f, 0f);
+        explosionFireParticles.basePos = pos;
+        explosionFireParticles.Size = NatFloat.createGauss(0.1f + r * 4f, r / 4f);
+        explosionFireParticles.Velocity = new[] {
+            NatFloat.createGauss(0f, 5f),
+            NatFloat.createGauss(0f + 0.5f, 5f),
+            NatFloat.createGauss(0f, 5f),
+        };
+        explosionFireParticles.SizeEvolve = EvolvingNatFloat.create(EnumTransformFunction.LINEARNULLIFY, -(0.1f + r * 4.25f));
+        explosionFireParticles.GravityEffect = NatFloat.createUniform(-1f, 0.5f);
+        explosionFireParticles.Quantity = NatFloat.createGauss(r2, r2/4f);
         world.SpawnParticles(explosionFireParticles);
         
         AdvancedParticleProperties fireTrailCubicles = ExplosionParticles.ExplosionFireTrailCubicles;
-        fireTrailCubicles.Velocity = new NatFloat[3]
+        fireTrailCubicles.Velocity = new NatFloat[]
         {
-            NatFloat.createUniform(0.0f, 8f + x),
-            NatFloat.createUniform(3f + x, 3f + x),
-            NatFloat.createUniform(0.0f, 8f + x)
+            NatFloat.createUniform(0.0f, 2f + r),
+            NatFloat.createUniform(3f + r, 3f + r),
+            NatFloat.createUniform(0.0f, 2f + r)
         };
-        fireTrailCubicles.basePos.Set((double) pos.X + 0.5, (double) pos.Y + 0.5, (double) pos.Z + 0.5);
+        fireTrailCubicles.basePos.Set(pos.X, pos.Y,  pos.Z);
         fireTrailCubicles.GravityEffect = NatFloat.createUniform(0.5f, 0.0f);
         fireTrailCubicles.LifeLength = NatFloat.createUniform(1.5f * x, 0.5f);
-        fireTrailCubicles.Quantity = NatFloat.createUniform(30f * x, 10f);
-        float num7 = (float) Math.Pow((double) x, 0.75);
-        fireTrailCubicles.Size = NatFloat.createUniform(0.5f * num7, 0.2f * num7);
-        fireTrailCubicles.SecondaryParticles[0].Size = NatFloat.createUniform(0.25f * (float) Math.Pow((double) x, 0.5), 0.05f * num7);
-        world.SpawnParticles((IParticlePropertiesProvider) fireTrailCubicles);
+        fireTrailCubicles.Quantity = NatFloat.createUniform(30f * x * x, 10f);
+        float num7 = (float) Math.Pow(x, 0.75);
+        fireTrailCubicles.Size = NatFloat.createUniform(num7, 0.5f * num7);
+        fireTrailCubicles.SecondaryParticles[0].Size = NatFloat.createUniform(0.25f * (float) Math.Pow(x, 0.5), 0.05f * num7);
+        world.SpawnParticles(fireTrailCubicles);
+
+        var soundPower = power * 0.75f + radius * 0.25f;
+        string str = "effect/smallexplosion";
+        if (soundPower > 12.0) {
+            str = "effect/largeexplosion";
+        }
+        else if (soundPower > 6.0) {
+            str = "effect/mediumexplosion";
+        }
+
+        world.PlaySoundAt("sounds/" + str, pos.X + 0.5, pos.Y + 0.5, pos.Z + 0.5, randomizePitch: false, range: (float) (24.0 * Math.Pow(radius, 0.5)));
+
     }
     
     public static float RaycastForExposure(IWorldAccessor world, Vec3d from, Entity target) {
@@ -86,5 +128,20 @@ public static class ExplosionUtil {
             }
         }
         return exposure;
+    }
+    
+    public static SimpleParticleProperties CloneParticles(this SimpleParticleProperties particles, IWorldAccessor worldForResovle)
+    {
+        SimpleParticleProperties particleProperties = new SimpleParticleProperties();
+        using var memoryStream = new MemoryStream();
+        
+        using var writer = new BinaryWriter(memoryStream);
+        particles.ToBytes(writer);
+        
+        memoryStream.Position = 0L;
+        using var reader = new BinaryReader(memoryStream);
+        particleProperties.FromBytes(reader, worldForResovle);
+        
+        return particleProperties;
     }
 }

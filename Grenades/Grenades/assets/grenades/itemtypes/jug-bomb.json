@@ -1,0 +1,41 @@
+{
+    code: "jug-bomb",
+	class: "grenades.ThrownExplosive",
+	creativeinventory: { "general": ["*"], "construction": ["*"] },
+    shape: { base: "item/jug-bomb" },
+	maxStackSize: 16,
+    variantgroups: [
+		{ code: "color", states: ["blue", "fire", "black", "brown", "cream", "gray", "orange", "red", "tan", ] }
+	],
+    textures: {
+        ceramic: {
+            "base": "game:block/clay/hardened/{color}", 
+            "blendedOverlays": [ { base: "game:block/clay/overlay/jug", blendmode: "Normal" } ]
+        }
+	},
+    attributes: {
+        projectile: "grenades:jug-bomb-{color}",
+        fuse: 2,
+        aoeRadius: 10,
+        damage: 3
+    },
+    guiTransform: {
+		translation: { x: 2, y: 4, z: 0 },
+		rotation: { x: 180, y: 42, z: -42 },
+		origin: { x: 0.5, y: 0.27, z: 0.5 },
+		scale: 1.86
+	},
+	"fpHandTransform": {
+		rotation: { x: -19, y: -45, z: 0 },
+		scale: 1.2
+	},
+	tpHandTransform: {
+		translation: { x: -1.1, y: -0.8, z: -1 },
+		rotation: { x: 0, y: 0, z: -89 },
+		origin: { x: 0.5, y: 0.25, z: 0.5 },
+		scale: 0.5
+	},
+	groundTransform: {
+		scale: 2.5
+	}
+}

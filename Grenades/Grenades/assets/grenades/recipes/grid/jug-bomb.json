@@ -1,0 +1,11 @@
+{
+    ingredientPattern: "F,P,J",
+    ingredients: {
+        "F": { type: "item", code: "fuse", quantity: 1 },
+        "P": { type: "item", code: "game:blastingpowder", quantity: 3 },
+        "J": { type: "block", code: "game:jug-*-fired", name: "color", quantity: 1 },
+    },
+    width: 1,
+	height: 3,
+	output: { type: "item", code: "jug-bomb-{color}", quantity: 1 }
+}
