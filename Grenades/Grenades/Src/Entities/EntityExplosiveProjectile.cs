@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Grenades.Util;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -18,6 +19,8 @@ public class EntityExplosiveProjectile : EntityProjectile {
     
     protected double fuse;
 
+    protected Entity? entityHit;
+    
     public override void Initialize(EntityProperties properties, ICoreAPI api, long InChunkIndex3dIn) {
         base.Initialize(properties, api, InChunkIndex3dIn);
 
@@ -62,9 +65,10 @@ public class EntityExplosiveProjectile : EntityProjectile {
         base.Die(reason, damageSourceForDeath);
         if (World.Side == EnumAppSide.Server) {
             var pos = ServerPos.XYZ;
+            entityHit?.WatchedAttributes.UnregisterListener(ResetInvulnerability);
+            
             World.DoExplosionDamage(pos, (float)peakDamage, damageTier, (float)damageRadius,  (float)damageRadius / 6f, this, FiredBy);
             World.DoExplosionEffects(pos, (float)peakDamage, (float)damageRadius);
-
             // var samples = 1L << 27;
             //
             // var generator1 = NatFloat.createGauss(0f, 1f);
@@ -97,6 +101,16 @@ public class EntityExplosiveProjectile : EntityProjectile {
     }
 
     private static float gaussian2;
+    
+    protected override void impactOnEntity(Entity entity) {
+        entityHit = entity;
+        entity.WatchedAttributes.RegisterModifiedListener("onHurt", ResetInvulnerability);
+        base.impactOnEntity(entity);
+    }
+
+    private void ResetInvulnerability() {
+        entityHit.SetActivityRunning("invulnerable", -1);
+    }
     
     public static float NextGaussian() {
         float v1, v2;

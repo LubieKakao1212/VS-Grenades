@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -23,6 +24,10 @@ public static class ExplosionUtil {
         var entities = world.GetEntitiesAround(pos, radius, radius, entity => entity.ShouldReceiveDamage(damageSource, peakDamage));
         
         foreach (var entity in entities) {
+            if(entity == source) {
+                continue;
+            }
+            
             //TODO check distance
             var exposure = RaycastForExposure(world, pos, entity);
             var distance = (float)entity.CollisionBox.ShortestDistanceFrom(pos.SubCopy(entity.ServerPos.XYZ));
