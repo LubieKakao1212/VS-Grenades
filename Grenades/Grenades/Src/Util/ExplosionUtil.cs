@@ -104,11 +104,15 @@ public static class ExplosionUtil {
     
     public static float RaycastForExposure(IWorldAccessor world, Vec3d from, Entity target) {
         var pos = target.ServerPos.XYZ;
-        var box = target.CollisionBox;
-        var box1 = box.OffsetCopy(
+        var box = target.CollisionBox.OffsetCopy(
             (float) pos.X,
             (float) pos.Y,
             (float) pos.Z);
+
+        if (box.Contains(from.X, from.Y, from.Z)) {
+            return 1f;
+        }
+        
         var exposure = 0f;
         for (int x = 0; x < ExposureResolution; x++) {
             for (int y = 0; y < ExposureResolution; y++) {
@@ -116,7 +120,7 @@ public static class ExplosionUtil {
                     var xt = x / (float) (ExposureResolution - 1);
                     var yt = y / (float) (ExposureResolution - 1);
                     var zt = z / (float) (ExposureResolution - 1);
-                    var targetPos = pos.AddCopy(
+                    var targetPos = new Vec3d(
                         GameMath.Lerp(box.MinX, box.MaxX, xt),
                         GameMath.Lerp(box.MinY, box.MaxY, yt),
                         GameMath.Lerp(box.MinZ, box.MaxZ, zt)
@@ -127,9 +131,9 @@ public static class ExplosionUtil {
                     EntitySelection? entitySelection = null;
                     //Will this work?
                     world.RayTraceForSelection(from, targetPos, ref blockSelection, ref entitySelection, (blockPos, block) => true, entity => entity == target);
-                   
+                    
                     if (blockSelection != null) {
-                        bool flag = box1.Contains(
+                        bool flag = box.Contains(
                             blockSelection.FullPosition.X,
                             blockSelection.FullPosition.Y,
                             blockSelection.FullPosition.Z);
