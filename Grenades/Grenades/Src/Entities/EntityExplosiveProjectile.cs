@@ -61,9 +61,8 @@ public class EntityExplosiveProjectile : EntityProjectile {
     public override void Die(EnumDespawnReason reason = EnumDespawnReason.Death, DamageSource damageSourceForDeath = null) {
         base.Die(reason, damageSourceForDeath);
         if (World.Side == EnumAppSide.Server) {
-            //((IServerWorldAccessor) World).CreateExplosion(ServerPos.XYZ.AsBlockPos, EnumBlastType.EntityBlast, blastRadius, damageRadius);
             var pos = ServerPos.XYZ;
-            World.DoExplosionDamage(pos, (float)peakDamage, damageTier, (float)damageRadius, FiredBy);
+            World.DoExplosionDamage(pos, (float)peakDamage, damageTier, (float)damageRadius,  (float)damageRadius / 6f, this, FiredBy);
             World.DoExplosionEffects(pos, (float)peakDamage, (float)damageRadius);
 
             // var samples = 1L << 27;

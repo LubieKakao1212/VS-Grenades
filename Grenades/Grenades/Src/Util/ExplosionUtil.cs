@@ -10,14 +10,14 @@ public static class ExplosionUtil {
 
     public const int ExposureResolution = 3;
     
-    public static void DoExplosionDamage(this IWorldAccessor world, Vec3d pos, float peakDamage, int damageTier, float radius, Entity cause) {
+    public static void DoExplosionDamage(this IWorldAccessor world, Vec3d pos, float peakDamage, int damageTier, float radius, float fullDamageRadius, Entity? source = null, Entity? cause = null) {
         var damageSource = new DamageSource() {
             Source = EnumDamageSource.Explosion,
             Type = EnumDamageType.BluntAttack,
             SourcePos = pos,
-            // CauseEntity = cause,
-            DamageTier = damageTier
-            // SourceEntity = TODO
+            CauseEntity = cause,
+            DamageTier = damageTier,
+            SourceEntity = source
         };
         
         var entities = world.GetEntitiesAround(pos, radius, radius, entity => entity.ShouldReceiveDamage(damageSource, peakDamage));
@@ -26,7 +26,9 @@ public static class ExplosionUtil {
             //TODO check distance
             var exposure = RaycastForExposure(world, pos, entity);
             var distance = (float)entity.CollisionBox.ShortestDistanceFrom(pos.SubCopy(entity.ServerPos.XYZ));
-            var damage = exposure * peakDamage * (radius - distance) / radius;
+            var distanceFactor = (radius - distance) / radius;
+            distanceFactor /= 1 - fullDamageRadius/radius;
+            var damage = peakDamage * exposure * Math.Clamp(distanceFactor, 0, 1);
 
             if (damage >= 0.25) {
                 entity.ReceiveDamage(damageSource, damage);
@@ -103,6 +105,10 @@ public static class ExplosionUtil {
     public static float RaycastForExposure(IWorldAccessor world, Vec3d from, Entity target) {
         var pos = target.ServerPos.XYZ;
         var box = target.CollisionBox;
+        var box1 = box.OffsetCopy(
+            (float) pos.X,
+            (float) pos.Y,
+            (float) pos.Z);
         var exposure = 0f;
         for (int x = 0; x < ExposureResolution; x++) {
             for (int y = 0; y < ExposureResolution; y++) {
@@ -115,19 +121,27 @@ public static class ExplosionUtil {
                         GameMath.Lerp(box.MinY, box.MaxY, yt),
                         GameMath.Lerp(box.MinZ, box.MaxZ, zt)
                         );
-
+                    
+                    
                     BlockSelection? blockSelection = null;
                     EntitySelection? entitySelection = null;
                     //Will this work?
-                    world.RayTraceForSelection(from, targetPos, ref blockSelection, ref entitySelection, (blockPos, block) => true, entity => false);
-
-                    if (blockSelection == null) {
-                        exposure += 1f / (ExposureResolution * ExposureResolution * ExposureResolution);
+                    world.RayTraceForSelection(from, targetPos, ref blockSelection, ref entitySelection, (blockPos, block) => true, entity => entity == target);
+                   
+                    if (blockSelection != null) {
+                        bool flag = box1.Contains(
+                            blockSelection.FullPosition.X,
+                            blockSelection.FullPosition.Y,
+                            blockSelection.FullPosition.Z);
+                        if (!flag) {
+                            continue;
+                        }
                     }
+                    exposure += 1f;
                 }
             }
         }
-        return exposure;
+        return exposure / (ExposureResolution * ExposureResolution * ExposureResolution);
     }
     
     public static SimpleParticleProperties CloneParticles(this SimpleParticleProperties particles, IWorldAccessor worldForResovle)

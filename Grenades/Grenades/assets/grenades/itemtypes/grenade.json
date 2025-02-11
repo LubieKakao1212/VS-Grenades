@@ -35,16 +35,16 @@
 			"*-electrum": 6
 		},
 		damageByType: {
-			"*-glass": 4.5,
-			"*-copper": 5.5,
-			"*-*bronze": 6.5,
-			"*-iron": 7.5,
-			"*-meteoriciron": 8.5,
-			"*-steel": 9.5,
+			"*-glass": 6.5,
+			"*-copper": 8,
+			"*-*bronze": 9,
+			"*-iron": 10,
+			"*-meteoriciron": 10.5,
+			"*-steel": 12,
 
-			"*-gold": 6,
-			"*-silver": 6,
-			"*-electrum": 6
+			"*-gold": 8.5,
+			"*-silver": 8.5,
+			"*-electrum": 8.5
 		},
 		damageTierByType : {
 			"*-glass": 2,
