@@ -65,11 +65,15 @@ public class ItemThrownExplosive : Item {
         float num2 = 1f - byEntity.Attributes.GetFloat("aimingAccuracy", 0.0f);
         double num3 = byEntity.WatchedAttributes.GetDouble("aimingRandPitch", 1.0) * (double) num2 * 0.75;
         double num4 = byEntity.WatchedAttributes.GetDouble("aimingRandYaw", 1.0) * (double) num2 * 0.75;
-        Vec3d vec3d = byEntity.ServerPos.XYZ.Add(0.0, byEntity.LocalEyePos.Y, 0.0);
-        Vec3d pos = (vec3d.AheadCopy(1.0, (double) byEntity.ServerPos.Pitch + num3, (double) byEntity.ServerPos.Yaw + num4) - vec3d) * 0.5;
+
+        var overrides = GrenadesModSystem.GetSidedConfig(byEntity.World.Side).GetExplosionOverridesFor(this);
+
+        var force = overrides.GetThrowingForce(0.5f);
+        
+        Vec3d motion = Vec3d.Zero.AheadCopy( force, byEntity.ServerPos.Pitch + num3, byEntity.ServerPos.Yaw + num4);
         
         entity.ServerPos.SetPosWithDimension(byEntity.ServerPos.BehindCopy(0.21).XYZ.Add(0.0, byEntity.LocalEyePos.Y, 0.0));
-        entity.ServerPos.Motion.Set(pos);
+        entity.ServerPos.Motion.Set(motion);
         entity.Pos.SetFrom(entity.ServerPos);
         entity.World = byEntity.World;
         byEntity.World.SpawnEntity(entity);
@@ -88,10 +92,12 @@ public class ItemThrownExplosive : Item {
         var peakDamage = collectibleAttributes["damage"].AsDouble(1);
         var damageTier = collectibleAttributes["damageTier"].AsInt(1);
 
-        dsc.AppendLine(Lang.Get("grenades:desc-fuse", fuse));
-        dsc.AppendLine(Lang.Get("grenades:desc-radius", damageRadius));
-        dsc.AppendLine(Lang.Get("grenades:desc-damage", peakDamage));
-        dsc.AppendLine(Lang.Get("grenades:desc-damageTier", damageTier));
+        var overrides = GrenadesModSystem.GetSidedConfig(world.Side).GetExplosionOverridesFor(this);
+        
+        dsc.AppendLine(Lang.Get("grenades:desc-fuse", overrides.GetFuse(fuse)));
+        dsc.AppendLine(Lang.Get("grenades:desc-radius", overrides.GetRadius(damageRadius)));
+        dsc.AppendLine(Lang.Get("grenades:desc-damage", overrides.GetDamage(peakDamage)));
+        dsc.AppendLine(Lang.Get("grenades:desc-damageTier", overrides.GetDamageTier(damageTier)));
     }
 
     // public override bool RequiresTransitionableTicking(IWorldAccessor world, ItemStack itemstack) {

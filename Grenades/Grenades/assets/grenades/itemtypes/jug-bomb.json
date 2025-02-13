@@ -16,7 +16,7 @@
     attributes: {
         projectile: "grenades:jug-bomb-{color}",
         fuse: 2,
-        aoeRadius: 10,
+        damageRadius: 10,
         damage: 5
     },
     guiTransform: {

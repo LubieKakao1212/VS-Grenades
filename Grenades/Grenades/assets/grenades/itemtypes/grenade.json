@@ -22,7 +22,7 @@
 	attributes: {
         projectile: "grenades:glass-grenade-{glass}-{metal}",
         fuse: 2,
-        aoeRadiusByType: {
+        damageRadiusByType: {
 			"*-glass": 6.5,
 			"*-copper": 5,
 			"*-*bronze": 5,

@@ -1,19 +1,17 @@
 using System;
-using System.Collections.Generic;
 using Grenades.Util;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
-using Vintagestory.API.MathTools;
-using Vintagestory.API.Server;
-using Vintagestory.Client.NoObf;
 using Vintagestory.GameContent;
+using Vintagestory.Server;
 
 namespace Grenades.Entities;
 
 public class EntityExplosiveProjectile : EntityProjectile {
     
     protected double damageRadius;
-    protected double blastRadius;
+    protected double fullDamageRadius;
+    // protected double blastRadius;
     protected double peakDamage;
     protected int damageTier;
     
@@ -29,24 +27,28 @@ public class EntityExplosiveProjectile : EntityProjectile {
         var stack = ProjectileStack;
         fuse = attributes["baseFuse"].AsDouble();
         damageRadius = attributes["aoeRadius"].AsDouble();
-        blastRadius = attributes["blastRadius"].AsDouble();
+        // blastRadius = attributes["blastRadius"].AsDouble();
         
         // EntityThrownStone
         NonCollectible = true;
         
         if (stack is { Collectible: not null }) {
             var collectibleAttributes = stack.Collectible.Attributes;
+
+            var overrides = GrenadesModSystem.GetSidedConfig(api.Side).GetExplosionOverridesFor(stack.Collectible);
             
-            fuse = collectibleAttributes["fuse"].AsDouble(1);
-            damageRadius = collectibleAttributes["aoeRadius"].AsDouble(1);
-            blastRadius = collectibleAttributes["blastRadius"].AsDouble(1);
-            peakDamage = collectibleAttributes["damage"].AsDouble(1);
-            damageTier = collectibleAttributes["damageTier"].AsInt(1);
+            fuse = overrides.GetFuse(collectibleAttributes["fuse"].AsDouble(1));
+            damageRadius = overrides.GetRadius(collectibleAttributes["damageRadius"].AsDouble(1));
+            fullDamageRadius = overrides.GetFullRadius(damageRadius / 6f);
+            
+            // blastRadius = collectibleAttributes["blastRadius"].AsDouble(1);
+            peakDamage = overrides.GetDamage(collectibleAttributes["damage"].AsDouble(1));
+            damageTier = overrides.GetDamageTier(collectibleAttributes["damageTier"].AsInt(1));
             
             var stackAttributes = stack.Attributes;
             fuse *= stackAttributes.GetDouble("fuseMult", 1);
             damageRadius *= stackAttributes.GetDouble("aoeRadiusMult", 1);
-            blastRadius *= stackAttributes.GetDouble("blastRadiusMult", 1);
+            // blastRadius *= stackAttributes.GetDouble("blastRadiusMult", 1);
             peakDamage *= stackAttributes.GetDouble("damageMult", 1);
             damageTier += stackAttributes.GetInt("damageTierAdd", 0);
         }
@@ -65,9 +67,9 @@ public class EntityExplosiveProjectile : EntityProjectile {
         base.Die(reason, damageSourceForDeath);
         if (World.Side == EnumAppSide.Server) {
             var pos = ServerPos.XYZ;
-            entityHit?.WatchedAttributes.UnregisterListener(ResetInvulnerability);
+            entityHit?.WatchedAttributes?.UnregisterListener(ResetInvulnerability);
             
-            World.DoExplosionDamage(pos, (float)peakDamage, damageTier, (float)damageRadius,  (float)damageRadius / 6f, this, FiredBy);
+            World.DoExplosionDamage(pos, (float)peakDamage, damageTier, (float)damageRadius,  (float)fullDamageRadius, this, FiredBy);
             World.DoExplosionEffects(pos, (float)peakDamage, (float)damageRadius);
             // var samples = 1L << 27;
             //

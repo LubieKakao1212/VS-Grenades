@@ -31,6 +31,10 @@ public static class ExplosionUtil {
             //TODO check distance
             var exposure = RaycastForExposure(world, pos, entity);
             var distance = (float)entity.CollisionBox.ShortestDistanceFrom(pos.SubCopy(entity.ServerPos.XYZ));
+            if (Math.Abs(radius - fullDamageRadius) < 1f / 64f) {
+                fullDamageRadius -= 1f / 64f;
+            }
+            
             var distanceFactor = (radius - distance) / radius;
             distanceFactor /= 1 - fullDamageRadius/radius;
             var damage = peakDamage * exposure * Math.Clamp(distanceFactor, 0, 1);
@@ -87,8 +91,10 @@ public static class ExplosionUtil {
         };
         fireTrailCubicles.basePos.Set(pos.X, pos.Y,  pos.Z);
         fireTrailCubicles.GravityEffect = NatFloat.createUniform(0.5f, 0.0f);
-        fireTrailCubicles.LifeLength = NatFloat.createUniform(1.5f * x, 0.5f);
-        fireTrailCubicles.Quantity = NatFloat.createUniform(30f * x * x, 10f);
+        var lifeDuration = MathF.Pow(x, 0.25f);
+        fireTrailCubicles.LifeLength = NatFloat.createUniform(lifeDuration, lifeDuration / 3f);
+        var quantity = MathF.Pow(x, 1.5f);
+        fireTrailCubicles.Quantity = NatFloat.createUniform(30f * quantity, 10f);
         float num7 = (float) Math.Pow(x, 0.75);
         fireTrailCubicles.Size = NatFloat.createUniform(num7, 0.5f * num7);
         fireTrailCubicles.SecondaryParticles[0].Size = NatFloat.createUniform(0.25f * (float) Math.Pow(x, 0.5), 0.05f * num7);
