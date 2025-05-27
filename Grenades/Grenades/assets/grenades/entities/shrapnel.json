@@ -1,0 +1,80 @@
+{
+	code: "shrapnel",
+	class: "grenades.ShrapnelProjectile",
+	variantgroups: [
+		{
+			code: "type",
+			states: ["flame", "solid"]
+		}
+	],
+	attributes: {
+		isProjectile: true,
+		damageTypeByType: {
+			"*-flame": 1, //Fire
+			"*-solid": 4, //PiercingAttack
+		},
+		persistsByType: {
+			"*-flame": true,
+			"*-solid": false
+		},
+		lifetime: 1,
+		damageRadiusByType: {
+			"*-flame": 1.5,
+			"*-solid": 0.25
+		}
+	},
+	hitboxSizeByType: { 
+		"*-flame": { 
+			x: 0.125, 
+			y: 0.125 
+		},
+		"*-solid": {
+			x: 0.125, 
+			y: 0.125 
+		}
+	},
+	client: {
+		size: 0.75,
+		renderer: "Dummy",
+		shape: { base: "item/glass-grenade" },
+		textures: {
+			casing: {
+				base: "game:block/glass/smoky"
+			},
+		},
+		behaviors: [
+			{ 
+				code: "passivephysics",
+				groundDragFactor: 1,
+				airDragFactor: 0.25,
+				gravityFactor: 0.75
+			}, 
+			{ code: "interpolateposition" }
+		],
+	},
+	server: {
+		behaviors: [
+			{
+				code: "grenades.Particles",
+				spawnDelta: 0,
+				vSpread: 3,
+				vRise: 0.1,
+				gravity: {
+					x: -0.2,
+					y: -0.3
+				},
+				lifetime: 0.5,
+				size: 3
+			},
+			{ 
+				code: "passivephysics",
+				groundDragFactor: 1,
+				airDragFactor: 0.25,
+				gravityFactor: 0.75
+			}, 
+			{ code: "despawn", minSeconds: 600 }
+		],
+	},
+	sounds: {
+	}
+}

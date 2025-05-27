@@ -1,5 +1,5 @@
 {
-	code: "glass-grenade",
+	code: "grenade",
 	class: "grenades.ExplosiveProjectile",
 	// variantgroups: [
 	// 	{ code: "casing", states: ["plain", "quartz", "green", "blue", "violet", "red", "yellow", "brown", "vintage", "smoky", "pink" ] },

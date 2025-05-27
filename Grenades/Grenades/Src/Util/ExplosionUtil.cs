@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
+using Grenades.Entities;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
@@ -9,8 +9,11 @@ namespace Grenades.Util;
 
 public static class ExplosionUtil {
 
+    private static readonly Random _shrapnelRandom = new Random();
+    
     public const int ExposureResolution = 3;
     
+    //TODO add 
     public static void DoExplosionDamage(this IWorldAccessor world, Vec3d pos, float peakDamage, int damageTier, float radius, float fullDamageRadius, Entity? source = null, Entity? cause = null) {
         var damageSource = new DamageSource() {
             Source = EnumDamageSource.Explosion,
@@ -58,7 +61,7 @@ public static class ExplosionUtil {
         // explosionFireParticles.AddPos.Set(r * 2f, r * 2f, r * 2f);
         explosionFireParticles.HsvaColor = new NatFloat[]
         {
-            NatFloat.createUniform(30f, 15f),
+            NatFloat.createUniform(25f, 15f),
             NatFloat.createUniform(byte.MaxValue, 50f),
             NatFloat.createUniform(byte.MaxValue, 0f),
             NatFloat.createUniform(200f, 30f)
@@ -80,6 +83,7 @@ public static class ExplosionUtil {
         explosionFireParticles.SizeEvolve = EvolvingNatFloat.create(EnumTransformFunction.LINEARNULLIFY, -(0.1f + r * 4.25f));
         explosionFireParticles.GravityEffect = NatFloat.createUniform(-1f, 0.5f);
         explosionFireParticles.Quantity = NatFloat.createGauss(r2, r2/4f);
+        explosionFireParticles.VertexFlags = 64;
         world.SpawnParticles(explosionFireParticles);
         
         AdvancedParticleProperties fireTrailCubicles = ExplosionParticles.ExplosionFireTrailCubicles;
@@ -111,6 +115,48 @@ public static class ExplosionUtil {
 
         world.PlaySoundAt("sounds/" + str, pos.X + 0.5, pos.Y + 0.5, pos.Z + 0.5, randomizePitch: false, range: (float) (24.0 * Math.Pow(radius, 0.5)));
 
+    }
+
+    public static void DoShrapnel(this IWorldAccessor world, Vec3d pos, AssetLocation shrapnelLocation, int countMin, int countMax, float velocityMin, float velocityMax, Vec3d velocityBias, double minTime, double maxTime, double damage, int damageTier, Entity? cause = null) {
+        var cr = world.ClassRegistry;
+        
+        EntityProperties entityType = world.GetEntityType(shrapnelLocation);
+
+        var count = _shrapnelRandom.Next(countMin, countMax + 1);
+        
+        for (int i = 0; i < count; i++) {
+            var entity = cr.CreateEntity(entityType);
+
+            var speed = GameMath.Lerp(velocityMin, velocityMax, _shrapnelRandom.NextSingle());
+                
+            var theta = MathF.Acos(_shrapnelRandom.NextSingle() * 2 - 1);
+            var phi = _shrapnelRandom.NextSingle() * MathF.PI * 2;
+
+            var sinTheta = MathF.Sin(theta);
+
+            var forward = new Vec3d(
+                sinTheta * MathF.Cos(phi),
+                sinTheta * MathF.Sin(phi),
+                MathF.Cos(theta)
+            );
+                        
+            var velocity = forward.Mul(speed).Add(velocityBias);
+            
+            var sPos = entity.ServerPos;
+            sPos.Motion = velocity;
+            sPos.SetPos(pos + forward.Mul(0.1f)); // We do not use Clone() since forward will not be used anymore
+            entity.Pos.SetFrom(sPos);
+            if (entity is IProjectile projectile) {
+                projectile.Damage = damage;
+                projectile.DamageTier = damageTier;
+                projectile.FiredBy = cause;
+            }
+            if (entity is IEntityLifetime entLife) {
+                entLife.Lifetime = _shrapnelRandom.NextDouble() * (maxTime - minTime) + minTime;
+            }
+            
+            world.SpawnEntity(entity);
+        }
     }
     
     public static float RaycastForExposure(IWorldAccessor world, Vec3d from, Entity target) {

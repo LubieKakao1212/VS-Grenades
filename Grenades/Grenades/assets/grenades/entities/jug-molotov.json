@@ -1,0 +1,49 @@
+{
+	code: "jug-molotov",
+	class: "grenades.ExplosiveProjectile",
+	variantgroups: [
+		{ code: "color", states: ["blue", "fire", "black", "brown", "cream", "gray", "orange", "red", "tan", ] }
+	],
+	attributes: {
+		isProjectile: true,
+        shrapnel: {
+			"entity-code": "shrapnel-flame",
+			// amount: 7,
+			// amountRandomness: 2,
+			velocityBias: [0, 1.2, 0],
+		}
+	},
+	hitboxSize: { x: 0.125, y: 0.125 },
+	client: {
+		size: 0.75,
+		renderer: "Shape",
+		shape: { base: "item/jug-bomb" },
+		textures: {
+			ceramic: { 
+				base: "game:block/clay/hardened/{color}", // blendedOverlays: [ { base: "game:block/clay/overlay/jug", blendmode: "Normal" } ]
+			}
+		},
+		behaviors: [
+			{ 
+				code: "passivephysics",
+				groundDragFactor: 1,
+				airDragFactor: 0.25,
+				gravityFactor: 0.75
+			}, 
+			{ code: "interpolateposition" }
+		],
+	},
+	server: {
+		behaviors: [
+			{ 
+				code: "passivephysics",
+				groundDragFactor: 1,
+				airDragFactor: 0.25,
+				gravityFactor: 0.75
+			}, 
+			{ code: "despawn", minSeconds: 600 }
+		],
+	},
+	sounds: {
+	}
+}

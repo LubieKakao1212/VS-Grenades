@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Grenades.Config;
 using Grenades.Entities;
+using Grenades.Entities.Behavior;
 using Grenades.Items;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -18,6 +19,8 @@ public class GrenadesModSystem : ModSystem {
         base.Start(api);
 
         api.RegisterEntity(Mod.Info.ModID + ".ExplosiveProjectile", typeof(EntityExplosiveProjectile));
+        api.RegisterEntity(Mod.Info.ModID + ".ShrapnelProjectile", typeof(EntityShrapnelProjectile));
+        api.RegisterEntityBehaviorClass(Mod.Info.ModID + ".Particles", typeof(EntityBehaviorParticleSpawner));
         api.RegisterItemClass(Mod.Info.ModID + ".ThrownExplosive", typeof(ItemThrownExplosive));
     }
 

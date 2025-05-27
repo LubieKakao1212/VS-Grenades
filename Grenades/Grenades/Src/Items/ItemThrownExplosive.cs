@@ -66,7 +66,7 @@ public class ItemThrownExplosive : Item {
         double num3 = byEntity.WatchedAttributes.GetDouble("aimingRandPitch", 1.0) * (double) num2 * 0.75;
         double num4 = byEntity.WatchedAttributes.GetDouble("aimingRandYaw", 1.0) * (double) num2 * 0.75;
 
-        var overrides = GrenadesModSystem.GetSidedConfig(byEntity.World.Side).GetExplosionOverridesFor(this);
+        var overrides = GrenadesModSystem.GetSidedConfig(byEntity.World.Side).GetGrenadeOverridesFor(this);
 
         var force = overrides.GetThrowingForce(0.5f);
         
@@ -92,7 +92,7 @@ public class ItemThrownExplosive : Item {
         var peakDamage = collectibleAttributes["damage"].AsDouble(1);
         var damageTier = collectibleAttributes["damageTier"].AsInt(1);
 
-        var overrides = GrenadesModSystem.GetSidedConfig(world.Side).GetExplosionOverridesFor(this);
+        var overrides = GrenadesModSystem.GetSidedConfig(world.Side).GetGrenadeOverridesFor(this);
         
         dsc.AppendLine(Lang.Get("grenades:desc-fuse", overrides.GetFuse(fuse)));
         dsc.AppendLine(Lang.Get("grenades:desc-radius", overrides.GetRadius(damageRadius)));
