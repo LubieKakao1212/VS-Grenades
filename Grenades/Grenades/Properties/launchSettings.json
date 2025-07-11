@@ -11,6 +11,18 @@
       "executablePath": "dotnet",
       "commandLineArgs": "\"$(VINTAGE_STORY)/VintagestoryServer.dll\" --tracelog --addModPath \"$(ProjectDir)/bin/$(Configuration)/Mods\"",
       "workingDirectory": "$(VINTAGE_STORY)"
+    },
+    "Client-MO": {
+      "commandName": "Executable",
+      "executablePath": "$(ModOrganizer)/ModOrganizer.exe",
+      "commandLineArgs": "-i \"Vintage Story\" -p \"GrenadesDev\" run -e \"Vintage Story\" -a \"--tracelog --addModPath \"$(ProjectDir)/bin/$(Configuration)/Mods\"\"",
+      "workingDirectory": "$(VINTAGE_STORY)"
+    },
+    "Server-MO": {
+      "commandName": "Executable",
+      "executablePath": "$(ModOrganizer)/ModOrganizer.exe",
+      "commandLineArgs": "-i \"Vintage Story\" -p \"GrenadesDev\" run -e \"Vintage Story Server\" -a \"--tracelog --addModPath \"$(ProjectDir)/bin/$(Configuration)/Mods\"\"",
+      "workingDirectory": "$(VINTAGE_STORY)"
     }
   }
 }
