@@ -2,10 +2,17 @@
 	code: "jug-bomb",
 	class: "grenades.ExplosiveProjectile",
 	variantgroups: [
-		{ code: "color", states: ["blue", "fire", "black", "brown", "cream", "gray", "orange", "red", "tan", ] }
+		{ code: "color", states: ["blue", "fire", "black", "brown", "cream", "gray", "orange", "red", "tan", ] },
+		{ code: "type", states: ["fragment", "flame"]}
 	],
 	attributes: {
-		isProjectile: true
+		isProjectile: true,
+		shrapnel: {
+			"entity-codeByType": {
+				"*-fragment": "shrapnel-solid",
+				"*-flame": "shrapnel-flame"
+			}
+		}
 	},
 	hitboxSize: { x: 0.125, y: 0.125 },
 	client: {
@@ -21,7 +28,7 @@
 			{ 
 				code: "passivephysics",
 				groundDragFactor: 1,
-				airDragFactor: 0.25,
+				airDragFactor: 0,
 				gravityFactor: 0.75
 			}, 
 			{ code: "interpolateposition" }
@@ -32,7 +39,7 @@
 			{ 
 				code: "passivephysics",
 				groundDragFactor: 1,
-				airDragFactor: 0.25,
+				airDragFactor: 0,
 				gravityFactor: 0.75
 			}, 
 			{ code: "despawn", minSeconds: 600 }

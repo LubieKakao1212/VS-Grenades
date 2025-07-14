@@ -1,9 +1,6 @@
 {
 	code: "grenade",
 	class: "grenades.ExplosiveProjectile",
-	// variantgroups: [
-	// 	{ code: "casing", states: ["plain", "quartz", "green", "blue", "violet", "red", "yellow", "brown", "vintage", "smoky", "pink" ] },
-	// ],
 	variantgroups: [
 		{
 			code: "glass",
@@ -22,7 +19,11 @@
 		"*-glass",
 	],
 	attributes: {
-		isProjectile: true
+		isProjectile: true,
+		shrapnel: {
+			"entity-code": "shrapnel-solid",
+			velocityBias: 10,
+		}
 	},
 	hitboxSize: { x: 0.125, y: 0.125 },
 	client: {
@@ -40,7 +41,7 @@
 		behaviors: [
 			{ code: "passivephysics",
 				groundDragFactor: 1,
-				airDragFactor: 0.25,
+				airDragFactor: 0,
 				gravityFactor: 0.75
 			}, 
 			{ code: "interpolateposition" }
@@ -51,7 +52,7 @@
 			{ 
 				code: "passivephysics",
 				groundDragFactor: 1,
-				airDragFactor: 0.25,
+				airDragFactor: 0,
 				gravityFactor: 0.75
 			}, 
 			{ code: "despawn", minSeconds: 600 }

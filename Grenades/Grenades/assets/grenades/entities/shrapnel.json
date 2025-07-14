@@ -17,10 +17,13 @@
 			"*-flame": true,
 			"*-solid": false
 		},
-		lifetime: 1,
 		damageRadiusByType: {
 			"*-flame": 1.5,
 			"*-solid": 0.25
+		},
+		fireByType: {
+			"*-flame": true,
+			"*-solid": false
 		}
 	},
 	hitboxSizeByType: { 

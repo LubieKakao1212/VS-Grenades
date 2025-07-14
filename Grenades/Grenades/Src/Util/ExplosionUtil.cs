@@ -14,14 +14,15 @@ public static class ExplosionUtil {
     public const int ExposureResolution = 3;
     
     //TODO add 
-    public static void DoExplosionDamage(this IWorldAccessor world, Vec3d pos, float peakDamage, int damageTier, float radius, float fullDamageRadius, Entity? source = null, Entity? cause = null) {
+    public static void DoExplosionDamage(this IWorldAccessor world, Vec3d pos, float peakDamage, int damageTier, float radius, float fullDamageRadius, float knockback, Entity? source = null, Entity? cause = null) {
         var damageSource = new DamageSource() {
             Source = EnumDamageSource.Explosion,
             Type = EnumDamageType.BluntAttack,
             SourcePos = pos,
             CauseEntity = cause,
             DamageTier = damageTier,
-            SourceEntity = source
+            SourceEntity = source,
+            KnockbackStrength = knockback,
         };
         
         var entities = world.GetEntitiesAround(pos, radius, radius, entity => entity.ShouldReceiveDamage(damageSource, peakDamage));
@@ -117,42 +118,49 @@ public static class ExplosionUtil {
 
     }
 
-    public static void DoShrapnel(this IWorldAccessor world, Vec3d pos, AssetLocation shrapnelLocation, int countMin, int countMax, float velocityMin, float velocityMax, Vec3d velocityBias, double minTime, double maxTime, double damage, int damageTier, Entity? cause = null) {
+    public static void DoShrapnel(this IWorldAccessor world, Vec3d pos, ShrapnelSpawnData spawnData, Entity? cause = null) {
         var cr = world.ClassRegistry;
         
-        EntityProperties entityType = world.GetEntityType(shrapnelLocation);
+        var entityCode = spawnData.ShrapnelLocation;
+        EntityProperties entityType = world.GetEntityType(entityCode);
 
-        var count = _shrapnelRandom.Next(countMin, countMax + 1);
+        var values = spawnData.Values;
+
+        var amount = (int)MathF.Round(values.Amount.Sample(_shrapnelRandom));
+
+        var cosPhiMin = MathF.Sin(GameMath.DEG2RAD * spawnData.Values.DirectionPitchMin);
+        var cosPhiMax = MathF.Sin(GameMath.DEG2RAD * spawnData.Values.DirectionPitchMax);
         
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < amount; i++) {
             var entity = cr.CreateEntity(entityType);
 
-            var speed = GameMath.Lerp(velocityMin, velocityMax, _shrapnelRandom.NextSingle());
-                
-            var theta = MathF.Acos(_shrapnelRandom.NextSingle() * 2 - 1);
-            var phi = _shrapnelRandom.NextSingle() * MathF.PI * 2;
+            var speed = values.Velocity.Sample(_shrapnelRandom);
 
-            var sinTheta = MathF.Sin(theta);
+            var theta = _shrapnelRandom.NextSingle() * MathF.PI * 2;
+            var cosPhi = cosPhiMin + (cosPhiMax - cosPhiMin) * _shrapnelRandom.NextSingle();
+            var phi = MathF.Acos(cosPhi);
+
+            var sinPhi = MathF.Sin(phi);
 
             var forward = new Vec3d(
-                sinTheta * MathF.Cos(phi),
-                sinTheta * MathF.Sin(phi),
-                MathF.Cos(theta)
+                sinPhi * MathF.Cos(theta),
+                cosPhi,
+                sinPhi * MathF.Sin(theta)
             );
                         
-            var velocity = forward.Mul(speed).Add(velocityBias);
+            var velocity = forward.Mul(speed).Add(spawnData.VelocityBias);
             
             var sPos = entity.ServerPos;
-            sPos.Motion = velocity;
+            sPos.ApplyImpulse(velocity);
             sPos.SetPos(pos + forward.Mul(0.1f)); // We do not use Clone() since forward will not be used anymore
             entity.Pos.SetFrom(sPos);
             if (entity is IProjectile projectile) {
-                projectile.Damage = damage;
-                projectile.DamageTier = damageTier;
+                projectile.Damage = values.Damage;
+                projectile.DamageTier = values.DamageTier;
                 projectile.FiredBy = cause;
             }
             if (entity is IEntityLifetime entLife) {
-                entLife.Lifetime = _shrapnelRandom.NextDouble() * (maxTime - minTime) + minTime;
+                entLife.Lifetime = values.Lifetime.Sample(_shrapnelRandom);
             }
             
             world.SpawnEntity(entity);
@@ -205,7 +213,7 @@ public static class ExplosionUtil {
         return exposure / (ExposureResolution * ExposureResolution * ExposureResolution);
     }
     
-    public static SimpleParticleProperties CloneParticles(this SimpleParticleProperties particles, IWorldAccessor worldForResovle)
+    public static SimpleParticleProperties CloneParticles(this SimpleParticleProperties particles, IWorldAccessor worldForResovle) 
     {
         SimpleParticleProperties particleProperties = new SimpleParticleProperties();
         using var memoryStream = new MemoryStream();

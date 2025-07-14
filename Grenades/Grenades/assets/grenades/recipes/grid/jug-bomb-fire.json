@@ -1,0 +1,17 @@
+{
+    ingredientPattern: "VJ",
+    ingredients: {
+        "J": { type: "item", code: "jug-bomb-*-standard", quantity: 1, name: "color" },
+        "V": { type: "item", code: "game:*", quantity: 1, allowedVariants: ["woodbucket", "bowl-fired"]  }
+    },
+    width: 2,
+	height: 1,
+    attributes: {
+      liquidContainerProps: {
+        requiresContent: { type: "item", code: "alcoholportion" },
+        requiresLitres: 0.2
+      }
+    },
+    shapeless: true,
+	output: { type: "item", code: "jug-bomb-{color}-fire", quantity: 1 }
+}

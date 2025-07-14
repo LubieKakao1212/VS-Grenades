@@ -26,6 +26,7 @@ public class EntityShrapnelProjectile : Entity, IProjectile, IEntityLifetime {
     private ConcurrentQueue<Entity> _entitiesHit = new();
 
     private float _damageRadius;
+    private bool _causesFire;
     
     public override void Initialize(EntityProperties properties, ICoreAPI api, long InChunkIndex3d) {
         base.Initialize(properties, api, InChunkIndex3d);
@@ -35,7 +36,7 @@ public class EntityShrapnelProjectile : Entity, IProjectile, IEntityLifetime {
         damageType = properties.Attributes["damageType"].AsObject<EnumDamageType>();
         _persists = properties.Attributes["persists"].AsBool();
         _damageRadius = properties.Attributes["damageRadius"].AsFloat();
-        // Lifetime = properties.Attributes["lifetime"].AsFloat();
+        _causesFire = properties.Attributes["fire"].AsBool();
     }
 
     private void OnPhysicsTickCallback(float dt) {
@@ -60,8 +61,6 @@ public class EntityShrapnelProjectile : Entity, IProjectile, IEntityLifetime {
         var box = new Cuboidd().GrowBy(_damageRadius, _damageRadius, _damageRadius).Translate(center);
             
         Ep.WalkEntities(center, _damageRadius, (ActionConsumable<Entity>) (e => {
-            // if (this.entitiesHit.Contains(e.EntityId))
-            //     return false;
             if (box.Intersects(e.SelectionBox, e.Pos.XYZ)) {
                 _entitiesHit.Enqueue(e);
             }
@@ -107,6 +106,9 @@ public class EntityShrapnelProjectile : Entity, IProjectile, IEntityLifetime {
             };
             
             entity.ReceiveDamage(source, (float)Damage);
+            if (_causesFire) {
+                entity.Ignite();
+            }
         }
     }
 

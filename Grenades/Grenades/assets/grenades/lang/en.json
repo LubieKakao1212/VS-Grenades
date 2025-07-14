@@ -25,11 +25,14 @@
     "item-grenade-casing-silver": "Silver Grenade Casing",
     "item-grenade-casing-electrum": "Electrum Grenade Casing",
 
-    "item-jug-bomb-*": "Jug Bomb",
+    "item-jug-bomb-*-standard": "Jug Bomb",
+    "item-jug-bomb-*-fire": "Jug Fire Bomb",
+    "item-jug-bomb-*-fire-2": "Jug Oil Bomb",
     "item-fuse": "Fuse",
 
     "desc-fuse": "Fuse: {0}s",
     "desc-damage": "Peak Damage: {0}",
     "desc-radius": "Explosion Radius: {0}m",
     "desc-damageTier": "Damage Tier: {0}",
+    "desc-force": "Throw Force: {0}",
 }

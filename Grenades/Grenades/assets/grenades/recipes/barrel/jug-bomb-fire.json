@@ -1,0 +1,8 @@
+{
+  code: "jug-bomb-flame",
+  ingredients: [
+    { type: "item", code: "game:alcoholportion", litres: 0.2 },
+    { type: "item", code: "jug-bomb-*-standard", quantity: 1, name: "color" }
+  ],
+  output: { type: "item", code: "jug-bomb-{color}-fire", litres: 2 }
+}

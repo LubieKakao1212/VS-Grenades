@@ -1,22 +1,23 @@
+using System.Diagnostics.CodeAnalysis;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
-using Vintagestory.Client.NoObf;
 
 namespace Grenades.Entities.Behavior;
 
 public class EntityBehaviorParticleSpawner : EntityBehavior {
 
-    private AdvancedParticleProperties particles;
-    private float interval;
-    private float timer;
+    [NotNull] private AdvancedParticleProperties? Particles { get; set; }
+
+    private float _interval;
+    private float _timer;
     
     public EntityBehaviorParticleSpawner(Entity entity) : base(entity) { }
 
     public override void Initialize(EntityProperties properties, JsonObject attributes) {
         var attribs = attributes;
-        interval = attribs["spawnDelta"].AsFloat();
+        _interval = attribs["spawnDelta"].AsFloat();
 
         var vSpread = attribs["vSpread"].AsFloat();
         var vRise = attribs["vRise"].AsFloat();
@@ -24,7 +25,7 @@ public class EntityBehaviorParticleSpawner : EntityBehavior {
         var life = attribs["lifetime"].AsFloat();
         var size = attribs["size"].AsFloat();
         
-        particles = new AdvancedParticleProperties {
+        Particles = new AdvancedParticleProperties {
             ParticleModel = EnumParticleModel.Cube,
             Velocity = new[] {
                 NatFloat.createGauss(0, vSpread),
@@ -57,12 +58,12 @@ public class EntityBehaviorParticleSpawner : EntityBehavior {
             return;
         }
         
-        timer += deltaTime;
-        if (timer >= interval) {
-            timer -= interval;
-            particles.ParentVelocity = entity.Pos.Motion.ToVec3f();
-            particles.basePos = entity.Pos.XYZ;
-            entity.World.SpawnParticles(particles);
+        _timer += deltaTime;
+        if (_timer >= _interval) {
+            _timer -= _interval;
+            Particles.ParentVelocity = entity.Pos.Motion.ToVec3f();
+            Particles.basePos = entity.Pos.XYZ;
+            entity.World.SpawnParticles(Particles);
         }
     }
 }

@@ -21,42 +21,82 @@
 	creativeinventory: { "general": ["*"], "construction": ["*"] },
 	attributes: {
         projectile: "grenades:grenade-{glass}-{metal}",
-        fuse: 2,
-        damageRadiusByType: {
-			"*-glass": 6.5,
-			"*-copper": 5,
-			"*-*bronze": 5,
-			"*-iron": 5,
-			"*-meteoriciron": 5.5,
-			"*-steel": 5.5,
-
-			"*-gold": 6,
-			"*-silver": 6,
-			"*-electrum": 6
-		},
-		damageByType: {
-			"*-glass": 6.5,
-			"*-copper": 8,
-			"*-*bronze": 9,
-			"*-iron": 10,
-			"*-meteoriciron": 10.5,
-			"*-steel": 12,
-
-			"*-gold": 8.5,
-			"*-silver": 8.5,
-			"*-electrum": 8.5
-		},
-		damageTierByType : {
-			"*-glass": 2,
-			"*-copper": 1,
-			"*-*bronze": 2,
-			"*-iron": 3,
-			"*-meteoriciron": 3,
-			"*-steel": 4,
-
-			"*-gold": 2,
-			"*-silver": 2,
-			"*-electrum": 2
+		explosive: {
+			fuse: 2,
+			radiusByType: {
+				"*-glass": 6.5,
+				"*-copper": 5,
+				"*-*bronze": 5,
+				"*-iron": 5,
+				"*-meteoriciron": 5.5,
+				"*-steel": 5.5,
+				"*-gold": 6,
+				"*-silver": 6,
+				"*-electrum": 6
+			},
+			innerRadius: 0.7,
+			damageByType: {
+				"*-glass": 6.5,
+				"*-copper": 8,
+				"*-*bronze": 9,
+				"*-iron": 10,
+				"*-meteoriciron": 10.5,
+				"*-steel": 12,
+				"*-gold": 9.5,
+				"*-silver": 9.5,
+				"*-electrum": 9.5
+			},
+			damageTierByType: {
+				"*-glass": 2,
+				"*-copper": 1,
+				"*-*bronze": 2,
+				"*-iron": 3,
+				"*-meteoriciron": 3,
+				"*-steel": 4,
+				"*-gold": 2,
+				"*-silver": 2,
+				"*-electrum": 2
+			},
+			knockbackByType: {
+				"*-glass*": 1.5,
+				"*": 1
+			},
+			launchForceByType: {
+				"*-glass*": 20,
+				"*": 12
+			},
+			
+			shrapnel: {
+				enabledByType: {
+					"*-glass*": false,
+					"*": true
+				},
+				damageByType: {
+					"*-copper": 4,
+					"*-*bronze": 4.5,
+					"*-iron": 5,
+					"*-meteoriciron": 5.25,
+					"*-steel": 6,
+					"*-gold": 2,
+					"*-silver": 2,
+					"*-electrum": 2
+				},
+				amount: {
+					value: 8,
+					randomness: 2
+				},
+				lifetime: {
+					value: 1,
+					randomness: 0.1
+				},
+				velocity: {
+					value: 20,
+					randomness: 5
+				},
+				velocityInheritance: 1,
+				directionPitchMin: -45,
+				directionPitchMax: 45,
+			}
 		}
     },
     shape: { base: "item/glass-grenade" },

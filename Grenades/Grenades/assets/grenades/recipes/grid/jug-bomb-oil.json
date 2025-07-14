@@ -1,0 +1,11 @@
+{
+  ingredientPattern: "FJ",
+  ingredients: {
+    "J": { type: "item", code: "jug-bomb-*-fire", quantity: 1, name: "color" },
+    "F": { type: "item", code: "game:fat", quantity: 1 }
+  },
+  width: 2,
+  height: 1,
+  shapeless: true,
+  output: { type: "item", code: "jug-bomb-{color}-fire-2", quantity: 1 }
+}
