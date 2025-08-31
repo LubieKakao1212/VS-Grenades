@@ -1,9 +1,11 @@
 using Grenades.Config;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.Server;
+using Vintagestory.GameContent;
 
 namespace Grenades;
 
@@ -24,8 +26,12 @@ public class ConfigModSystem : ModSystem {
                 if (Config == null) {
                     Config = new ConfigFile2();
                 }
-                api.StoreModConfig(Config, "GrenadesServerConfig.json");
-                api.World.Config[Mod.Info.ModID + ".Config"] = new JsonObject(JToken.FromObject(Config)).ToAttribute();
+                var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+                var configObject = JToken.FromObject(Config, serializer);
+                api.StoreModConfig(configObject, "GrenadesServerConfig.json");
+                api.World.Config[Mod.Info.ModID + ".Config"] = new JsonObject(configObject).ToAttribute(); 
             }
             catch (Exception e) {
                 Mod.Logger.Error("Could not load config! Loading default settings instead.");

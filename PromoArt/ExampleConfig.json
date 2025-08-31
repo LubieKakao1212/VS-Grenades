@@ -1,0 +1,82 @@
+{
+  "overrides": [
+    { // Override the damage of "blue" grenades [glass, jug bomb, jug fire bomb, jug oil bomb]
+      "Key": "*blue*",
+      "Value": {
+        "damage": 100
+      }
+    },
+    { // Override the damage, radius, and knockback of all grenades jug bombs
+      "Key": "jug-bomb-*-standard",
+      "Value": {
+        "damage": 1, // Won't apply for jug-bomb-blue-standard because its damage was changed in the previous override
+        "radius": 1,
+        "knockback": 10
+      }
+    },
+    { // Disable shrapnel of metal grenades
+      "Key": "*metal*",
+      "Value": {
+        "shrapnel": {
+          "enabled": false
+        }
+      }
+    },
+    { // Enable shrapnel for glass grenades (yes you can do that), and lower the fuse time
+      "Key": "*glass*",
+      "Value": {
+        "fuse": 0.5,
+        "shrapnel": {
+          "enabled": true, // You most likely want to set all the parameters since they are not set for glass grenades
+          "damage": 30,
+          "amount": {
+            "value": 32,
+            "randomness": 2
+          },
+          "lifetime": {
+            "value": 1,
+            "randomness": 0.1
+          },
+          "velocity": {
+            "value": 10,
+            "randomness": 5
+          },
+          "velocityInheritance": 10,
+          "directionPitchMin": -90,
+          "directionPitchMax": 90
+        }
+      }
+    },
+    { // Reference of all the configurable values (Default values are in the item files on the repo)
+      "Key": "*",
+      "Value": {
+        "fuse": 2, // Fuse time, in seconds
+        "radius": 6, // Explosion radius, in blocks
+        "innerRadius": 0.7, // Peak damage radius as a ratio of total radius, must be in range [0, 1]
+        "damage": 9.5, // Peak damage
+        "damageTier": 2, // Damage tier
+        "knockback": 1, // Knockback
+        "launchForce": 12, // Velocity of the grenade after throwing, in blocks per second
+        "shrapnel": { //Regarding shrapnel
+          "enabled": true, // Enable/Disable for shrapnel
+          "damage": 2, // Damage dealt by the shrapnel pieces, damage per "tick" for flames
+          "amount": { // Amount of shrapnel pieces
+            "value": 8,
+            "randomness": 2
+          }, // Final Value is in range [value - randomness, value + randomness]
+          "lifetime": { // Time until a piece despawns, in seconds
+            "value": 1,
+            "randomness": 0.1
+          }, // Final Value is in range [value - randomness, value + randomness]
+          "velocity": { // Speed of launched pieces, in blocks per second
+            "value": 20,
+            "randomness": 5
+          }, // Final Value is in range [value - randomness, value + randomness]
+          "velocityInheritance": 1, // How much the velocity of the shrapnel is affected by the velocity of the grenade at the time of detonation
+          "directionPitchMin": -45, //Minimum allowed angle form the XZ plane at which the shrapnel will be launched
+          "directionPitchMax": 45 //Maximum allowed angle form the XZ plane at which the shrapnel will be launched
+        }
+      }
+    }
+  ]
+}

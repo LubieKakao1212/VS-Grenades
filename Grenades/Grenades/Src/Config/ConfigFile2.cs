@@ -19,7 +19,7 @@ public class ConfigFile2 {
         foreach (var pair in _overrides) {
             var location = new AssetLocation("*", pair.Key);
             if (WildcardUtil.Match(location, code, null)) {
-                Merger.MergeRecursive<ConfigGrenadeStatValues>(configOverride, pair.Value);
+                configOverride = Merger.MergeRecursive<ConfigGrenadeStatValues>(configOverride, pair.Value).Value;
             }
         }
         

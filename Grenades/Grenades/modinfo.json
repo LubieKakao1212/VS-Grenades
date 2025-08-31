@@ -1,12 +1,12 @@
 {
     "type": "code",
     "modid": "grenades",
-    "name": "Grenades",
+    "name": "Grenades!",
     "authors": [
         "LubieKakao1212"
     ],
     "description": "To be added",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "dependencies": {
         "game": ""
     }

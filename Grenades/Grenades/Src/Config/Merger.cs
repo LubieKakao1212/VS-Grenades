@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Vintagestory.API.Common;
 
@@ -74,6 +75,7 @@ public static class Merger {
         return b is TA ba ? ba : a; //Should work?
     }
     
+    [return: NotNullIfNotNull(nameof(a))]
     public static T? MergeRecursive<T>(this T? a, T? b, ILogger? logger = null) where T: struct {
         if (typeof(T) == typeof(float) || 
             typeof(T) == typeof(bool) || 

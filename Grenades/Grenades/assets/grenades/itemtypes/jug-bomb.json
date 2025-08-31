@@ -20,7 +20,6 @@
 					{ base: "game:block/clay/overlay/jug", blendmode: "Normal" },
 					{ base: "overlay/jug-oil", blendmode: "Multiply" }
 				],
-
 				"*-fragment": [
 					{ base: "game:block/clay/overlay/jug", blendmode: "Normal" }
 				],
