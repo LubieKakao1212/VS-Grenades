@@ -5,8 +5,11 @@
     "authors": [
         "LubieKakao1212"
     ],
-    "description": "To be added",
-    "version": "1.2.1",
+    "contributors": [
+        "MrFlame"
+    ],
+    "description": "Grenades for all your combat blasting needs.",
+    "version": "1.2.2",
     "dependencies": {
         "game": ""
     }

@@ -1,0 +1,40 @@
+{
+	"game:tabname-grenades": "Гранаты",
+
+	"item-grenade-*-glass": "Стеклянная граната",
+
+	"item-grenade-metal-copper": "Медная граната",
+	"item-grenade-metal-tinbronze": "Оловянно-бронзовая граната",
+	"item-grenade-metal-bismuthbronze": "Висмутово-бронзовая граната",
+	"item-grenade-metal-blackbronze": "Чернобронзовая граната",
+	"item-grenade-metal-iron": "Железная граната",
+	"item-grenade-metal-meteoriciron": "Метеоритно-железная граната",
+	"item-grenade-metal-steel": "Стальная граната",
+
+	"item-grenade-metal-gold": "Святая ручная граната",
+	"item-grenade-metal-silver": "Полусвятая ручная граната",
+	"item-grenade-metal-electrum": "Святейшая ручная граната",
+
+	"item-grenade-casing-copper": "Медный корпус гранаты",
+	"item-grenade-casing-tinbronze": "Оловянно-бронзовый корпус гранаты",
+	"item-grenade-casing-bismuthbronze": "Висмутово-бронзовый корпус гранаты",
+	"item-grenade-casing-blackbronze": "Чернобронзовый корпус гранаты",
+	"item-grenade-casing-iron": "Железный корпус гранаты",
+	"item-grenade-casing-meteoriciron": "Метеоритно-железный корпус гранаты",
+	"item-grenade-casing-steel": "Стальной корпус гранаты",
+
+	"item-grenade-casing-gold": "Золотой корпус гранаты",
+	"item-grenade-casing-silver": "Серебряный корпус гранаты",
+	"item-grenade-casing-electrum": "Электрумовый корпус гранаты",
+
+	"item-jug-bomb-*-standard": "Кувшин-граната",
+	"item-jug-bomb-*-fire": "Огненный кувшин",
+	"item-jug-bomb-*-fire-2": "Масляный кувшин",
+	"item-fuse": "Фитиль",
+
+	"desc-fuse": "Фитиль: {0} с",
+	"desc-damage": "Пиковый урон: {0}",
+	"desc-radius": "Радиус взрыва: {0} м",
+	"desc-damageTier": "Уровень урона: {0}",
+	"desc-force": "Сила броска: {0}"
+}

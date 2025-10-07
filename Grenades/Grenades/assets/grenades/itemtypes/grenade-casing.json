@@ -3,7 +3,7 @@
 	variantgroups: [
 		{ code: "metal", states: ["copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "meteoriciron", "steel", "electrum" ] },
 	],
-	creativeinventory: { "general": ["*"], "construction": ["*"] },
+	creativeinventory: { "general": ["*"], "construction": ["*"], "grenades": ["*"] },
     shape: { base: "item/grenade-casing" },
 	textures: {
 		material: { base: "game:block/metal/ingot/{metal}" },

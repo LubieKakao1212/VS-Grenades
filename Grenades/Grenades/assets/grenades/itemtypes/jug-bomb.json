@@ -1,7 +1,7 @@
 {
     code: "jug-bomb",
 	class: "grenades.ThrownExplosive",
-	creativeinventory: { "general": ["*"], "construction": ["*"] },
+	creativeinventory: { "general": ["*"], "construction": ["*"], "grenades": ["*"] },
     shape: { base: "item/jug-bomb" },
 	maxStackSize: 16,
     variantgroups: [

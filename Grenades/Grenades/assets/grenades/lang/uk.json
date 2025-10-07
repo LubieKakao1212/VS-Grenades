@@ -1,0 +1,40 @@
+{
+	"game:tabname-grenades": "Гранати",
+
+	"item-grenade-*-glass": "Скляна граната",
+
+	"item-grenade-metal-copper": "Граната з міді",
+	"item-grenade-metal-tinbronze": "Граната з олов'яної бронзи",
+	"item-grenade-metal-bismuthbronze": "Граната з вісмутової бронзи",
+	"item-grenade-metal-blackbronze": "Граната з чорної бронзи",
+	"item-grenade-metal-iron": "Граната із заліза",
+	"item-grenade-metal-meteoriciron": "Граната з метеоритного заліза",
+	"item-grenade-metal-steel": "Граната зі сталі",
+
+	"item-grenade-metal-gold": "Священна ручна граната",
+	"item-grenade-metal-silver": "Напівсвященна ручна граната",
+	"item-grenade-metal-electrum": "Найсвятіша ручна граната",
+
+	"item-grenade-casing-copper": "Корпус гранати з міді",
+	"item-grenade-casing-tinbronze": "Корпус гранати з олов'яної бронзи",
+	"item-grenade-casing-bismuthbronze": "Корпус гранати з вісмутової бронзи",
+	"item-grenade-casing-blackbronze": "Корпус гранати з чорної бронзи",
+	"item-grenade-casing-iron": "Корпус гранати із заліза",
+	"item-grenade-casing-meteoriciron": "Корпус гранати з метеоритного заліза",
+	"item-grenade-casing-steel": "Корпус гранати зі сталі",
+
+	"item-grenade-casing-gold": "Золотий корпус гранати",
+	"item-grenade-casing-silver": "Срібний корпус гранати",
+	"item-grenade-casing-electrum": "Електрумовий корпус гранати",
+
+	"item-jug-bomb-*-standard": "Глечик-граната",
+	"item-jug-bomb-*-fire": "Вогняний глечик",
+	"item-jug-bomb-*-fire-2": "Масляний глечик",
+	"item-fuse": "Гніт",
+
+	"desc-fuse": "Гніт: {0} с",
+	"desc-damage": "Пікова шкода: {0}",
+	"desc-radius": "Радіус вибуху: {0} м",
+	"desc-damageTier": "Рівень шкоди: {0}",
+	"desc-force": "Сила кидка: {0}"
+}

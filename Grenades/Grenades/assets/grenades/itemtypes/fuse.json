@@ -1,13 +1,7 @@
 {
     code: "fuse",
-	creativeinventory: { "general": ["*"], "construction": ["*"] },
+	creativeinventory: { "general": ["*"], "construction": ["*"], "grenades": ["*"] },
     shape: { base: "item/fuse" },
-    "guiTransform": {
-		translation: { x: 0, y: 0, z: 0 },
-		rotation: { x: 0, y: 0, z: 0 },
-		origin: { x: 0, y: 0, z: 0 },
-		scale: 2.25
-	},
 	maxStackSize: 64,
 	"fpHandTransform": {
 		rotation: { x: 0, y: 0, z: 0 },
