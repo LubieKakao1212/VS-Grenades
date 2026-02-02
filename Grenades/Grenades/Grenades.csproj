@@ -8,6 +8,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <!-- Game Dependencoes -->
     <ItemGroup>
         <Reference Include="VintagestoryAPI">
             <HintPath>$(VINTAGE_STORY)/VintagestoryAPI.dll</HintPath>
@@ -34,7 +35,17 @@
             <Private>false</Private>
         </Reference>
     </ItemGroup>
+    
+    <!-- Mod Dependencoes -->
+    <ItemGroup>
+        <Reference Include="LevelUp">
+            <HintPath>../../Deps/LevelUp.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+    </ItemGroup>
 
+
+    <!-- Other Stuff -->
     <ItemGroup>
         <Content Include="assets\**">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

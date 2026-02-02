@@ -1,0 +1,28 @@
+{
+    ingredient: { type: "item", code: "game:ingot-*", name: "metal", allowedVariants: ["electrum", "gold", "silver"] },
+    pattern: [
+        [
+            "_____",
+            "_###_",
+            "_###_",
+            "_###_",
+            "_____",
+        ],
+        [
+            "_###_",
+            "#___#",
+            "#___#",
+            "#___#",
+            "_###_",
+        ],
+        [
+            "_#_#_",
+            "#___#",
+            "_____",
+            "#___#",
+            "_#_#_",
+        ]
+    ],
+    name: "GrenadeCasing",
+    output: { type: "item", code: "grenade-casing-{metal}", quantity: 1 }
+}

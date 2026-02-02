@@ -1,11 +1,24 @@
-{
-    ingredientPattern: "F,P,C",
-    ingredients: {
-        "F": { type: "item", code: "fuse", quantity: 1 },
-        "P": { type: "item", code: "game:blastingpowder", quantity: 2 },
-        "C": { type: "item", code: "grenade-casing-*", name: "metal", quantity: 1 },
+[
+    {
+        ingredientPattern: "F,P,C",
+        ingredients: {
+            "F": { type: "item", code: "fuse", quantity: 1 },
+            "P": { type: "item", code: "game:blastingpowder", quantity: 2 },
+            "C": { type: "item", code: "grenade-casing-*", name: "metal", quantity: 1, allowedVariants: ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] }
+        },
+        width: 1,
+        height: 3,
+        output: { type: "item", code: "grenade-metal-{metal}", quantity: 1 }
     },
-    width: 1,
-	height: 3,
-	output: { type: "item", code: "grenade-metal-{metal}", quantity: 1 }
-}
+    {
+        ingredientPattern: "F,P,C",
+        ingredients: {
+            "F": { type: "item", code: "fuse", quantity: 1 },
+            "P": { type: "item", code: "game:blastingpowder", quantity: 8 },
+            "C": { type: "item", code: "grenade-casing-*", name: "metal", quantity: 1, allowedVariants: ["electrum", "gold", "silver"] }
+        },
+        width: 1,
+        height: 3,
+        output: { type: "item", code: "grenade-metal-{metal}", quantity: 1 }
+    }
+]

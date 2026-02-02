@@ -30,21 +30,21 @@
 				"*-iron": 5,
 				"*-meteoriciron": 5.5,
 				"*-steel": 5.5,
-				"*-gold": 6,
-				"*-silver": 6,
-				"*-electrum": 6
+				"*-gold": 10,
+				"*-silver": 10,
+				"*-electrum": 10
 			},
 			innerRadius: 0.7,
 			damageByType: {
-				"*-glass": 6.5,
-				"*-copper": 8,
-				"*-*bronze": 9,
-				"*-iron": 10,
-				"*-meteoriciron": 10.5,
-				"*-steel": 12,
-				"*-gold": 9.5,
-				"*-silver": 9.5,
-				"*-electrum": 9.5
+				"*-glass": 6,
+				"*-copper": 11,
+				"*-*bronze": 15,
+				"*-iron": 20,
+				"*-meteoriciron": 22,
+				"*-steel": 30,
+				"*-gold": 29,
+				"*-silver": 29,
+				"*-electrum": 29
 			},
 			damageTierByType: {
 				"*-glass": 2,
@@ -65,11 +65,10 @@
 				"*-glass*": 20,
 				"*": 12
 			},
-			
 			shrapnel: {
 				enabledByType: {
 					"*-glass*": false,
-					"*": true
+					"*": false
 				},
 				damageByType: {
 					"*-copper": 4,

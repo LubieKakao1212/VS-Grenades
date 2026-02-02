@@ -1,0 +1,3 @@
+[
+    { file: "recipes/smithing/grenade-casing.json", dependsOn: [{modid: "smithingplus"}], path: "/output/quantity", op: "replace", value: 6 }
+]

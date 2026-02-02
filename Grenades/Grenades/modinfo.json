@@ -9,7 +9,7 @@
         "MrFlame"
     ],
     "description": "Grenades for all your combat blasting needs.",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "dependencies": {
         "game": ""
     }
